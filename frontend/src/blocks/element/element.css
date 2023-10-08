@@ -1,0 +1,8 @@
+.element {
+  background-color: #ffffff;
+  border-radius: 10px 10px 10px 10px;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: 282px 79px;
+  position: relative;
+}

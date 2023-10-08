@@ -1,0 +1,22 @@
+.area {
+  padding-top: 36px;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: 282px;
+  grid-auto-rows: 1fr;
+  gap: 20px;
+}
+
+@media screen and (min-width: 600px) {
+  .area {
+    grid-template-columns: repeat(2, 282px);
+    column-gap: 17px;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .area {
+    padding-top: 47.25px;
+    grid-template-columns: repeat(3, 282px);
+  }
+}

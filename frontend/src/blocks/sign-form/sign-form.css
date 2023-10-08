@@ -1,0 +1,15 @@
+.sign-form {
+  width: 358px;
+  display: flex;
+  background-color: black;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+@media screen and (min-width: 320px) and (max-width: 618px) {
+  .sign-form {
+    width: 320px;
+  }
+}

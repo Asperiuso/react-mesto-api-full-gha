@@ -1,0 +1,12 @@
+.header__user-info {
+  display: flex;
+  gap: 25px;
+}
+
+@media screen and (min-width: 320px) and (max-width: 618px) {
+  .header__user-info {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+}

@@ -1,0 +1,22 @@
+.header__user_type_mobile {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  color: #FFFFFF;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  margin-right: 0;
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+  .header__user_type_mobile {
+    margin-right: 0;
+    margin-bottom: 18px;
+    text-align: center;
+  }
+}

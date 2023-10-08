@@ -1,0 +1,8 @@
+.element__title-block {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 22px 21px 22px 21px;
+  display: grid;
+  grid-template-columns: 1fr 22px;
+  align-items: center;
+}

@@ -1,0 +1,24 @@
+.profile__button-add {
+  grid-area: profile__button-add;
+  grid-row: 1/3;
+  min-height: 50px;
+  padding: 0;
+  border: solid 2px #ffffff;
+  border-radius: 2px;
+  background: url('../../../images/plus.svg') center no-repeat;
+  background-size: 22px 22px;
+}
+
+@media screen and (min-width: 619px) and (max-width: 918px) {
+  .profile__button-add {
+    grid-row: 1/4;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 618px) {
+  .profile__button-add {
+    width: 100%;
+    grid-row: 4/5;
+    background-size: 16px 16px;
+  }
+}

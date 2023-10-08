@@ -1,0 +1,6 @@
+.popup__container_type_info-tool-tip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 330px;
+}
