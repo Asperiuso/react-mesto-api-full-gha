@@ -1,6 +1,3 @@
-require('dotenv').config();
-
-const SECRET_KEY = process.env.JWT_SECRET;
 const URL_PATTERN = /^(https?:\/\/)(www\.)?([\w-.~:/?#[\]@!$&')(*+,;=]*\.?)*\.{1}[\w]{2,8}(\/([\w-.~:/?#[\]@!$&')(*+,;=])*)?/;
 
 module.exports = {

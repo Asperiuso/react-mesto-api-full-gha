@@ -9,10 +9,8 @@ const { createUser, login } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const NotFoundError = require('./errors/NotFoundError');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-
+const { URL_PATTERN } = require('./utils/constants;')
 const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/testdb' } = process.env;
-
-const urlRegex = /^https?:\/\/\S+/;
 
 const app = express();
 
@@ -46,7 +44,7 @@ app.get('/crash-test', () => {
 app.post('/signin', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
-    password: Joi.string().required().alphanum(),
+    password: Joi.string().required(),
   }),
 }), login);
 
@@ -54,7 +52,7 @@ app.post('/signup', celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),
     about: Joi.string().min(2).max(30),
-    avatar: Joi.string().regex(urlRegex),
+    avatar: Joi.string().regex(URL_PATTERN),
     email: Joi.string().required().email(),
     password: Joi.string().required(),
   }),
