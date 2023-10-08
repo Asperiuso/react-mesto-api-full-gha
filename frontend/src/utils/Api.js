@@ -1,89 +1,126 @@
-class Api {
-  constructor({ baseUrl, headers }) {
-    this._baseUrl = baseUrl;
-    this._headers = headers;
+export default class Api {
+  constructor(options) {
+    this._url = options.url;
+    this._headers = options.headers;
+    this._authorization = options.headers.authorization; //токен
   }
-  //----------------------------------------------------------------------//
-  // Загрузка информации о пользователе с сервера
-  getUserInfo() {
-    return this._request('users/me', { headers: this._headers });
-  }
-  // Загрузка карточек с сервера
-  getCards() {
-    return this._request('cards', { headers: this._headers });
-  }
-  //----------------------------------------------------------------------//
-  // Редактирование аватара пользователя
-  chahgeUserAvatar({ avatar }) {
-    return this._request('users/me/avatar', {
-      method: 'PATCH',
-      headers: this._headers,
-      body: JSON.stringify({ avatar }),
-    });
-  }
-  // Редактирование профиля
-  changeUserInfo({ name, about }) {
-    return this._request('users/me', {
-      method: 'PATCH',
-      headers: this._headers,
-      body: JSON.stringify({ name, about }),
-    });
-  }
-  //----------------------------------------------------------------------//
-  // Создание новой карточки
-  addNewCard(body) {
-    return this._request('cards', {
-      method: 'POST',
-      headers: this._headers,
-      body: JSON.stringify(body),
-    });
-  }
-  // Удаление карточки
-  deleteCard(id) {
-    return this._request(`cards/${id}`, {
-      method: 'DELETE',
-      headers: this._headers,
-    });
-  }
-  // Добавить лайк
-  addLike(id) {
-    return this._request(`cards/${id}/likes`, {
-      method: 'PUT',
-      headers: this._headers,
-    });
-  }
-  // Убрать лайк
-  removeLike(id) {
-    return this._request(`cards/${id}/likes`, {
-      method: 'DELETE',
-      headers: this._headers,
-    });
-  }
-  //----------------------------------------------------------------------//
-  // Универсальный метод запроса с проверкой ответа
-  _request(endpoint, options) {
-    return fetch(`${this._baseUrl}${endpoint}`, options).then(
-      this._getResponseData
-    );
-  }
-  // Универсальный метод, который при запросе на сервер возвращает json,
-  // если все прошло успешно, или ошибку, если нет
-  _getResponseData(res) {
+
+  _checkRes(res) {
     if (res.ok) {
       return res.json();
     }
     return Promise.reject(`Ошибка: ${res.status}`);
   }
+
+  _request(url, options) {
+    return fetch(url, options).then(this._checkRes);
+  }
+
+  getUserInfo(token) {
+    return this._request(`${this._url}/users/me`, {
+      method: "GET",
+      headers: {
+        ...this._headers,
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+  }
+
+  getInitialCards(token) {
+    return this._request(`${this._url}/cards`, {
+      headers: {
+        ...this._headers,
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+  }
+
+  setUserInfo(data, token) {
+    return this._request(`${this._url}/users/me`, {
+      method: "PATCH",
+      headers: {
+        ...this._headers,
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        name: data.name,
+        about: data.about,
+      }),
+    });
+  }
+
+  addNewCard(data, token) {
+    return this._request(`${this._url}/cards`, {
+      method: "POST",
+      headers: {
+        ...this._headers,
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        name: data.name,
+        link: data.link,
+      }),
+    });
+  }
+
+  deleteCard(id, token) {
+    return this._request(`${this._url}/cards/${id}`, {
+      method: "DELETE",
+      headers: {
+        ...this._headers,
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+  }
+
+  changeLikeCardStatus(id, isLiked, token) {
+    return this._request(`${this._url}/cards/${id}/likes`, {
+      method: isLiked ? "PUT" : "DELETE",
+      headers: {
+        ...this._headers,
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+  }
+
+  addLike(id, token) {
+    return this._request(`${this._url}/cards/${id}/likes`, {
+      method: "PUT",
+      headers: {
+        ...this._headers,
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+  }
+
+  removeLike(id, token) {
+    return this._request(`${this._url}/cards/${id}/likes`, {
+      method: "DELETE",
+      headers: {
+        ...this._headers,
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+  }
+
+  setUserAvatar(data, token) {
+    return this._request(`${this._url}/users/me/avatar`, {
+      method: "PATCH",
+      headers: {
+        ...this._headers,
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        avatar: data.avatar,
+      }),
+    });
+  }
 }
 
-// Создание экземпляра класса Api
-const api = new Api({
-  // baseUrl: 'http://localhost:3000/',
-  baseUrl: 'https://api.mestox.nomoredomainsrocks.ru/',
+export const api = new Api({
+  url: "https://api.mestox.nomoredomainsrocks.ru",
   headers: {
-    'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
-export default api;

@@ -1,14 +1,18 @@
 const URL_PATTERN = /^(https?:\/\/)(www\.)?([\w-.~:/?#[\]@!$&')(*+,;=]*\.?)*\.{1}[\w]{2,8}(\/([\w-.~:/?#[\]@!$&')(*+,;=])*)?/;
+const corsOpt = {
+  origin: [
+    'http://localhost:3001',
+    'http://localhost:3000',
+    'http://mestox.nomoredomainsrocks.ru',
+    'https://mestox.nomoredomainsrocks.ru',
+  ],
+  credentials: true,
+  methods: ['GET', 'PUT', 'POST', 'DELETE', 'PATCH'],
+  allowedHeaders: ['Authorization', 'Content-Type'],
+  optionsSuccessStatus: 200,
+};
 
 module.exports = {
-  BAD_REQUEST: 400,
-  NOT_FOUND: 404,
-  INTERNAL_SERVER_ERROR: 500,
-  FORBIDDEN: 403,
-  UNAUTHORIZED: 401,
-  CONFLICT: 409,
-  OK_STATUS: 200,
-  OK_CREATED: 201,
-  SECRET_KEY,
   URL_PATTERN,
+  corsOpt,
 };
