@@ -13,8 +13,15 @@ function Main({
 }) {
   // Подписываем компонент на контекст
   const currentUser = React.useContext(CurrentUserContext);
-  // переменная содержащая компонент-Card
-  const cardsElements = cards.map((card) => (
+ 
+  // Сортируем карточки по дате создания в убывающем порядке
+  const sortedCards = cards.sort((a, b) => {
+    const dateA = new Date(a.createdAt);
+    const dateB = new Date(b.createdAt);
+    return dateB - dateA;
+  });
+
+  const cardsElements = sortedCards.map((card) => (
     <Card
       card={card}
       key={card._id}
